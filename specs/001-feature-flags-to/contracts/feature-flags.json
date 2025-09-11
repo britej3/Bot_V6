@@ -1,0 +1,92 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Feature Flags API",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/feature-flags": {
+      "get": {
+        "summary": "List all feature flags",
+        "responses": {
+          "200": {
+            "description": "A list of feature flags",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FeatureFlag"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/feature-flags/{name}": {
+      "put": {
+        "summary": "Update a feature flag",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FeatureFlagUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The updated feature flag",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FeatureFlag"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "FeatureFlag": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "enabled": {
+            "type": "boolean"
+          },
+          "description": {
+            "type": "string"
+          }
+        }
+      },
+      "FeatureFlagUpdate": {
+        "type": "object",
+        "properties": {
+          "enabled": {
+            "type": "boolean"
+          }
+        }
+      }
+    }
+  }
+}

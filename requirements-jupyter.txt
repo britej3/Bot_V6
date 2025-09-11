@@ -1,0 +1,60 @@
+# Jupyter and Data Science Dependencies
+jupyterlab==4.0.9
+jupyterlab-lsp==5.0.1
+python-lsp-server[all]==1.9.0
+jupyterlab-git==0.44.0
+jupyterlab-code-formatter==2.2.1
+jupyterlab-vim==4.1.2
+jupyterlab-system-monitor==0.8.0
+
+# Interactive Widgets
+ipywidgets==8.1.1
+jupyterlab-widgets==3.0.9
+
+# Plotting and Visualization
+matplotlib==3.8.2
+seaborn==0.13.0
+plotly==5.17.0
+bokeh==3.3.4
+altair==5.2.0
+hvplot==0.9.1
+
+# Data Science
+scipy==1.11.4
+statsmodels==0.14.1
+scikit-image==0.22.0
+
+# Time Series Analysis
+statsmodels==0.14.1
+arch==6.3.0
+pmdarima==2.0.4
+
+# Financial Analysis
+yfinance==0.2.18
+quantlib-python==1.33
+ta==0.10.2
+
+# Machine Learning Visualization
+yellowbrick==1.5
+dtreeviz==2.2.2
+plotnine==0.12.4
+
+# Notebook Extensions
+nbdime==4.0.1
+jupyter-contrib-nbextensions==0.5.1
+jupyter-nbextensions-configurator==0.6.3
+
+# Export and Conversion
+nbconvert==7.11.0
+jupyterlab-pdf==0.5.0
+
+# Interactive Computing
+papermill==2.5.0
+nbclient==0.9.0
+
+# Testing in Jupyter
+testbook==0.4.2
+
+# Progress bars and utilities
+tqdm==4.66.1
+rich==13.7.0

@@ -1,0 +1,59 @@
+{
+    "python.defaultInterpreterPath": "./venv/bin/python",
+    "python.linting.enabled": true,
+    "python.linting.pylintEnabled": true,
+    "python.linting.pylintPath": "./venv/bin/pylint",
+    "python.linting.flake8Enabled": true,
+    "python.linting.flake8Path": "./venv/bin/flake8",
+    "python.formatting.provider": "black",
+    "python.formatting.blackPath": "./venv/bin/black",
+    "python.formatting.blackArgs": ["--line-length", "88"],
+    "python.testing.pytestEnabled": true,
+    "python.testing.pytestPath": "./venv/bin/pytest",
+    "python.testing.pytestArgs": [
+        "tests",
+        "--verbose",
+        "--cov=src",
+        "--cov-report=html",
+        "--cov-report=term-missing"
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.nosetestsEnabled": false,
+    "files.exclude": {
+        "**/__pycache__": true,
+        "**/*.pyc": true,
+        "**/.pytest_cache": true,
+        "**/.coverage": true,
+        "**/htmlcov": true,
+        "**/.mypy_cache": true,
+        "**/.ruff_cache": true
+    },
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": "explicit",
+        "source.fixAll": "explicit"
+    },
+    "python.analysis.typeCheckingMode": "basic",
+    "python.analysis.autoImportCompletions": true,
+    "python.analysis.completeFunctionParens": true,
+    "docker.showStartPage": false,
+    "docker.dockerPath": "/usr/local/bin/docker",
+    "docker.composeCommand": "docker-compose",
+    "files.associations": {
+        "*.py": "python",
+        "*.yaml": "yaml",
+        "*.yml": "yaml",
+        "*.sql": "sql",
+        "*.md": "markdown"
+    },
+    "yaml.schemas": {
+        "https://json.schemastore.org/docker-compose.json": "docker-compose*.yml"
+    },
+    "git.ignoreLimitWarning": true,
+    "terminal.integrated.shell.osx": "/bin/zsh",
+    "terminal.integrated.cwd": "${workspaceFolder}",
+    "workbench.colorTheme": "Dark+",
+    "window.zoomLevel": 0,
+    "python.terminal.activateEnvironment": true,
+    "python.terminal.activateEnvInCurrentTerminal": true
+}

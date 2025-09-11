@@ -1,0 +1,58 @@
+ ---PART 1: Modifications/Updates to Current Plan & Rectification of Issues
+
+  *Based on PRD_TASK_BREAKDOWN.md and `pytest` output*1.  Addressing `pytest` Failures (Critical First Step):  Pydantic Deprecation: (See Error Analysis Point 1)* Update any Pydantic models (likely in src/config.py or future
+  src/models/) to use pydantic.ConfigDict instead of the nested class Config:.
+       * HTTPX Deprecation: (See Error Analysis Point 2) Update httpx calls in your tests (specifically where raw data is sent) to use content= instead of data=.
+       * Failed API Tests (`test_api.py`): (See Error Analysis Point3) This is the most critical set of failures.  Action: These indicate that your API endpoints are not implemented or not correctly routed. Do not proceed with 
+         complex AI integrations until the basic API structure is working.         Steps:1.  Verify API Implementation: Ensure you have actual endpoint handler functions defined (e.g., async def submit_trade(...)). 2.  Verify 
+         API Routing: Ensure your main FastAPI app instance (e.g., app = FastAPI()) is correctly including the routers where these handlers are defined (e.g., app.include_router(trading_router)).            3.  Fix Test Client:
+         Ensure the TestClient in test_api.py is initialized with the correct main app instance. 4. Debug: Run individual tests with verbose output (pytest -xvs 
+         tests/integration/test_api.py::TestAPIEndpoints::test_invalid_request_handling) and add print statements to see where the request is going (404 means it didn't find the route).  Failed Database Tests 
+         (`test_database.py`): (See Error Analysis Point 4)*
+           * Action: The core issue is mocking async methods with MagicMock. This needs fixing.
+           * Steps:            1.  Import from unittest.mock import AsyncMock.
+               2. In test_database.py, wherever you mock an async def method (e.g., DatabaseManager.create_tables), replace MagicMock(...) with AsyncMock(...). 3. Fix the AttributeError by ensuring DatabaseManager is correctly
+                  defined/imported in src/config.py and accessed correctly in the test.       Failed Config Tests (`test_config.py`): (See Error Analysis Point 5)    Action: Your settings validation or environment loading is
+                  likely not working as expected by the tests.
+           * Steps:            1.  Review your src/config.py. Ensure it uses pydantic_settings.BaseSettings (or similar) and ConfigDict(env_file=".env", ...).2.  Ensure required environment variables (like DATABASE_URL,
+             ENVIRONMENT) are defined in a .env file for tests that check defaults or validation. 3. Ensure Pydantic fields have correct types (e.g., pydantic.AnyHttpUrl) to trigger ValidationError as expected by the tests.
+
+   2. Enhancing the PRD_TASK_BREAKDOWN.md (Based on Research Papers):
+       * Note: All enhancements below should only be implemented after the basic project structure (API, DB, Config, passing tests) is stabilized.
+       * Section 3.2: Functional Requirements - AI/ML Engine:
+           * Task 3.2.1 (Design ScalpingAIModel class architecture): Update the description.
+               * Modification: Define it as the core architecture for a Deep Reinforcement Learning (DRL) Agent, referencing the applsci paper for the foundational approach (e.g., Actor-Critic architecture for high-frequency
+                 decisions). *   *Future Enhancement: Note the potential for evolving this into a Hierarchical Reasoning Agent (HRM) inspired by the HRM paper, with "fast" (scalping) and "slow" (strategy/regime detection) 
+                 modules.    Task 3.2.2 (Implement LSTM, CNN, Transformer, GNN, RL components): Refocus this task. *   *Modification: Simplify the scope. Implement the core DRL agent's neural network. Start with a standard 
+                 architecture (e.g., Dense/MLP layers, potentially LSTM for sequence processing) suitable for the DRL agent.               Future Enhancement (Post-Stabilization): Add a sub-task to investigate and prototype
+                 custom neural components inspired by the ZRIA notebook (e.g., Fractal Attention layers) for potential integration into advanced agent versions.    Section5.1: System Architecture Implementation:*
+           * Add New Major Component: Introduce the Autonomous Strategy Management Engine (ASME), as suggested. This becomes the meta-controller for the bot's evolution.    Integration:* The AI/ML Engine (DRL Agent) becomes a
+             core component *managed* by the ASME. *   Section 6.2: Backtesting Framework:
+           * Add New Task6.2.3 (Implement Financial Reasoning Benchmark): Add this task, inspired by the ZRIA notebook. *   *Description:* Develop a suite of synthetic, complex financial scenarios to rigorously test the bot's
+             internal logic and decision-making process, beyond standard historical backtests. This supports robustness and "Self-Healing" by identifying logical flaws.
+
+  ---PART 2: Future Additions - New Files and Components (Research Integration)*Implemented *after* basic structure and tests pass.*
+
+   1. Core AI Agents & Environment:       `src/agents/drl_agent.py`: Implement the core Deep Reinforcement Learning Agent. This is the foundational decision-maker based on the `applsci` paper.       src/env/trading_env.py:
+      Implement the Trading Environment. This simulates market interactions, provides data (OHLCV, features), and calculates rewards for the DRL agent.    `src/models/decision_network.py`: Define the Neural Network architecture*
+      for the DRL agent's policy/value networks. Start simple, plan for complexity (HRM/ZRIA-inspired layers) later.
+       * (Future Advanced) src/agents/hierarchical_agent.py: Prototype the Hierarchical Reasoning Agent, integrating concepts from the HRM paper (fast/slow processing).2.  Autonomous Strategy Management Engine (ASME) - The 
+         Meta-Controller:
+       * src/asme/__init__.py: (Standard package file).  `src/asme/core.py` or `src/asme/orchestrator.py`: The main Orchestrator implementing the MLE-STAR workflow (Search, Initialize, Refine). Manages the lifecycle of 
+         strategies.  src/asme/refiner.py or src/asme/strategy_refiner.py: Module for Strategy Refinement. Uses an LLM to propose code changes/improvements to the agent or its environment.     `src/asme/ablation_agent.py`: 
+         Module for Ablation Studies. Automatically identifies the most impactful parts of the current strategy for targeted refinement.    src/asme/healing_agent.py or src/asme/debugging_agent.py: Module for Self-Healing.
+         Includes automated debugging and data leakage detection for strategy code.
+       * src/asme/searcher.py: Module for the Search component, potentially querying research papers, forums, or internal logs for new ideas.3.  Enhanced Testing & Evaluation:
+       * tests/reasoning/benchmark.py: Implement the Financial Reasoning Benchmark logic inspired by the ZRIA notebook.       `tests/reasoning/scenarios/`: Directory containing various synthetic financial scenarios* (e.g.,
+         nested logic rules, contradictory signals, regime changes) for the reasoning benchmark.
+       * (Enhancement to Backtesting) tests/backtesting/baselines.py: Implement traditional strategy baselines (e.g., Double Crossover) for performance comparison, as suggested by the applsci paper.
+
+  Validation Summary:
+
+   * This merged plan prioritizes rectifying the fundamental structural and testing issues first. A stable base is crucial.
+   * It then provides a clear, research-paper-informed roadmap for building the AI core (DRL agent) and the autonomous management layer (ASME).
+   * The plan is structured to allow for incremental development: start with a simple, working DRL agent, then layer on complexity (HRM, ZRIA components) and autonomy (ASME).*   It aligns the initial PRD tasks with the research
+     insights, ensuring the project's architecture is built for its ambitious goals from the outset.
+   * By following this validated draft, you can systematically build a robust Bot_V5 that not only passes its initial tests but is also architected to leverage cutting-edge AI research for true autonomy.
+
+╭──────────────────────────────────────

@@ -1,0 +1,81 @@
+
+.clinerules/byterover-rules.md
+.kilocode/rules/byterover-rules.md
+.roo/rules/byterover-rules.md
+.windsurf/rules/byterover-rules.md
+.cursor/rules/byterover-rules.mdc
+.kiro/steering/byterover-rules.md
+.qoder/rules/byterover-rules.md
+.augment/rules/byterover-rules.md
+ 
+# --- OS & Editors ---
+.DS_Store
+.idea/
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+
+# --- Local AI agent configs (ignored entirely) ---
+.agent-os/
+.claude/
+.cursor/
+.roo/
+.qoder/
+.augment/
+.windsurf/
+.kilocode/
+.kiro/
+.clinerules/
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.so
+.Python
+env/
+venv/
+.venv/
+pip-wheel-metadata/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage*
+htmlcov/
+.tox/
+.ipynb_checkpoints/
+site/
+
+# --- Environments & Secrets ---
+.env
+.env.*
+*.pem
+*.key
+*.crt
+*.p12
+
+# --- Logs & Temp ---
+logs/
+*.log
+*.tmp
+tmp/
+
+# --- Node ---
+node_modules/
+dist/
+coverage/
+
+# --- Go ---
+bin/
+*.test
+*.out
+
+# --- Build & Artifacts ---
+build/
+dist/
+*.egg-info/
+
+# --- Docker ---
+*.tar
+
+# --- Database files ---
+*.db

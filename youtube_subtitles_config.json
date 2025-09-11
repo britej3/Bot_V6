@@ -1,0 +1,13 @@
+{
+    "mcpServers": {
+        "youtube-subtitles": {
+            "command": "python",
+            "args": [
+                "youtube_subtitles_mcp.py"
+            ],
+            "env": {
+                "PYTHONPATH": "."
+            }
+        }
+    }
+}

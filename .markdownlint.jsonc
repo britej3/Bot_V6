@@ -1,0 +1,116 @@
+{
+    "default": true,
+    "MD001": true, // Header levels should only increment by one level at a time
+    "MD002": true, // First header should be a top level header
+    "MD003": { // Header style
+        "style": "atx"
+    },
+    "MD004": { // Unordered list style
+        "style": "dash"
+    },
+    "MD005": true, // Inconsistent indentation for list items at the same level
+    "MD006": true, // Consider starting bulleted lists at the beginning of the line
+    "MD007": { // Unordered list indentation
+        "indent": 2
+    },
+    "MD009": { // Trailing spaces
+        "br_spaces": 2,
+        "list_item_empty_lines": false,
+        "strict": false
+    },
+    "MD010": true, // Hard tabs
+    "MD011": true, // Reversed link syntax
+    "MD012": true, // Multiple consecutive blank lines
+    "MD013": { // Line length
+        "line_length": 120,
+        "tables": false,
+        "code_blocks": false
+    },
+    "MD014": true, // Dollar signs used before commands without showing output
+    "MD018": true, // No space after hash on atx style header
+    "MD019": true, // Multiple spaces after hash on atx style header
+    "MD020": true, // No space inside hashes on closed atx style header
+    "MD021": true, // Multiple spaces inside hashes on closed atx style header
+    "MD022": true, // Headers should be surrounded by blank lines
+    "MD023": true, // Headers must start at the beginning of the line
+    "MD024": { // Multiple headers with the same content
+        "allow_different_nesting": true
+    },
+    "MD025": { // Multiple top level headers in the same document
+        "level": 1
+    },
+    "MD026": { // Trailing punctuation in header
+        "punctuation": ".,;:!?"
+    },
+    "MD027": true, // Multiple spaces after blockquote symbol
+    "MD028": true, // Blank line inside blockquote
+    "MD029": { // Ordered list item prefix
+        "style": "ordered"
+    },
+    "MD030": { // Spaces after list markers
+        "ul_single": 1,
+        "ol_single": 1,
+        "ul_multi": 1,
+        "ol_multi": 1
+    },
+    "MD031": true, // Fenced code blocks should be surrounded by blank lines
+    "MD032": true, // Lists should be surrounded by blank lines
+    "MD033": { // Inline HTML
+        "allowed_elements": [
+            "details",
+            "summary",
+            "br",
+            "kbd",
+            "code",
+            "pre"
+        ]
+    },
+    "MD034": true, // Bare URL used
+    "MD035": { // Horizontal rule style
+        "style": "---"
+    },
+    "MD036": true, // Emphasis used instead of a header
+    "MD037": true, // Spaces inside emphasis markers
+    "MD038": true, // Spaces inside code span elements
+    "MD039": true, // Spaces inside link text
+    "MD040": true, // Fenced code blocks should have a language specified
+    "MD041": { // First line in file should be a top level header
+        "level": 1,
+        "front_matter_title": ""
+    },
+    "MD042": true, // No empty links
+    "MD043": false, // Required header structure (disabled for flexibility)
+    "MD044": { // Proper names should have the correct capitalization
+        "names": [
+            "JavaScript",
+            "TypeScript",
+            "Python",
+            "PostgreSQL",
+            "Redis",
+            "Docker",
+            "Kubernetes"
+        ],
+        "code_blocks": false
+    },
+    "MD045": true, // Images should have alt text
+    "MD046": { // Code block style
+        "style": "fenced"
+    },
+    "MD047": true, // Files should end with a single newline character
+    "MD048": { // Code fence style
+        "style": "backtick"
+    },
+    "MD049": { // Emphasis style
+        "style": "underscore"
+    },
+    "MD050": { // Strong style
+        "style": "asterisk"
+    },
+    "MD051": true, // Link fragments should be valid
+    "MD052": true, // Reference links and images should use a label that is defined
+    "MD053": true, // Link and image reference definitions should be needed
+    "MD054": true, // Link and image reference definitions should be on their own line
+    "MD055": true, // Table pipe style
+    "MD056": true, // Table column count
+    "MD057": true // Table column count
+}

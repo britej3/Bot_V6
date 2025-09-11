@@ -1,0 +1,91 @@
+# Override configuration for local development
+
+services:
+  cryptoscalp-app:
+    # Override for local development
+    environment:
+      - CRYPTOSCALP_ENV=development
+      - DEBUG=true
+      - LOG_LEVEL=DEBUG
+    volumes:
+      - .:/app:cached
+      - ./data:/app/data:cached
+      - ./logs:/app/logs:cached
+      - ./models:/app/models:cached
+    # Enable live reload
+    command: >
+      sh -c "python -m uvicorn src.main:app --host 0.0.0.0 --port 8000 --reload --reload-dir /app/src"
+    # For development, we might want to use host networking for better performance
+
+  jupyter:
+    volumes:
+      - .:/app:cached
+      - ./notebooks:/app/notebooks:cached
+      - ./data:/app/data:cached
+
+  cryptoscalp-db:
+    # Enable external access for development tools
+    ports:
+      - "127.0.0.1:5432:5432"
+
+  cryptoscalp-redis:
+    ports:
+      - "127.0.0.1:6379:6379"
+
+  pgadmin:
+
+  # Development-specific services
+  redis-commander:
+    image: rediscommander/redis-commander:latest
+    container_name: cryptoscalp-redis-commander
+    environment:
+      - REDIS_HOSTS=local:cryptoscalp-redis:6379
+    ports:
+      - "8081:8081"
+    depends_on:
+      - cryptoscalp-redis
+    networks:
+      - cryptoscalp-network
+    profiles:
+      - dev-tools
+
+  # MailHog for email testing in development
+  mailhog:
+    image: mailhog/mailhog:latest
+    container_name: cryptoscalp-mailhog
+    ports:
+      - "1025:1025"    # SMTP server
+      - "8025:8025"    # Web interface
+    networks:
+      - cryptoscalp-network
+    profiles:
+      - dev-tools
+
+  # Adminer for database management (alternative to pgAdmin)
+  adminer:
+    image: adminer:latest
+    container_name: cryptoscalp-adminer
+    ports:
+      - "8082:8080"
+    depends_on:
+      - cryptoscalp-db
+    networks:
+      - cryptoscalp-network
+    profiles:
+      - dev-tools
+
+# Development-specific volumes for better performance
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+  clickhouse_data:
+    driver: local
+
+# Development network with custom configuration
+networks:
+  cryptoscalp-network:
+    driver: bridge
+    driver_opts:
+      com.docker.network.bridge.name: cryptoscalp-dev

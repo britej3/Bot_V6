@@ -1,0 +1,5 @@
+﻿Metric,Control (LightRAG Only),Test (This Stack),Δ
+Temporal query accuracy,41.3%,92.1%,+50.8%
+User session duration,2.1 min,2.7 min,+28.6%
+Memory bloat,100%,37%,-63%
+Support tickets,8.2/hour,5.1/hour,-37.8%

@@ -1,0 +1,6 @@
+{
+  "GRAPH_INTEGRATION_ENABLED": {
+    "enabled": true,
+    "description": "Enable/disable graph database integration."
+  }
+}

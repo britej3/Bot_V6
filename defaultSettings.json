@@ -1,0 +1,159 @@
+{
+	"telemetry.telemetryLevel": "all",
+	"diffEditor.diffAlgorithm": "advanced",
+	"editor.cursorBlinking": "blink",
+	"editor.fontFamily": "Menlo, Monaco, 'Courier New', monospace",
+	"editor.fontSize": 12,
+	"editor.lineHeight": 0,
+	"editor.lineNumbers": "on",
+	"editor.renderWhitespace": "selection",
+	"editor.rulers": [],
+	"editor.tabSize": 4,
+	"editor.insertSpaces": true,
+	"editor.trimAutoWhitespace": true,
+	"editor.wordWrap": "off",
+	"files.encoding": "utf8",
+	"files.autoGuessEncoding": false,
+	"files.trimTrailingWhitespace": false,
+	"files.insertFinalNewline": false,
+	"files.trimFinalNewlines": false,
+	"workbench.colorTheme": "Qoder Dark",
+	"workbench.iconTheme": "vs-seti",
+	"terminal.integrated.shell.osx": "/bin/zsh",
+	"terminal.integrated.defaultProfile.osx": "zsh",
+	"terminal.integrated.fontFamily": "Menlo, Monaco, 'Courier New', monospace",
+	"terminal.integrated.fontSize": 12,
+	"terminal.integrated.cursorStyle": "block",
+	"terminal.integrated.cursorBlinking": false,
+	"terminal.integrated.scrollback": 1000,
+	"terminal.integrated.gpuAcceleration": "auto",
+	"terminal.integrated.enableImages": false,
+	"terminal.integrated.shellIntegration.enabled": false,
+	"terminal.integrated.suggest.enabled": false,
+	"terminal.integrated.commandsToSkipShell": [],
+	"terminal.integrated.enableMultiLinePasteWarning": false,
+	"terminal.integrated.allowWorkspaceConfiguration": false,
+	"terminal.integrated.defaultLocation": "view",
+	"terminal.integrated.tabs.enabled": true,
+	"terminal.integrated.tabs.location": "right",
+	"terminal.integrated.tabs.showActiveTerminal": "singleTerminalOrNarrow",
+	"debug.javascript.autoAttachFilter": "disabled",
+	"debug.javascript.unmapMissingSources": false,
+	"debug.javascript.breakOnConditionalError": false,
+	"debug.javascript.debugByLinkOptions": "on",
+	"python.pythonPath": "python",
+	"python.venvPath": "",
+	"python.analysis.typeCheckingMode": "off",
+	"python.languageServer": "None",
+	"python.terminal.activateEnvironment": true,
+	"python.terminal.shellIntegration.enabled": false,
+	"python.testing.pytestEnabled": false,
+	"python.testing.unittestEnabled": false,
+	"javascript.preferences.quoteStyle": "auto",
+	"typescript.preferences.quoteStyle": "auto",
+	"html.format.enable": true,
+	"css.validate": true,
+	"scss.validate": true,
+	"less.validate": true,
+	"json.validate.enable": true,
+	"markdown.preview.typographer": false,
+	"markdown.preview.breaks": false,
+	"markdown.validate.enabled": false,
+	"extensions.autoCheckUpdates": true,
+	"extensions.autoUpdate": true,
+	"update.mode": "default",
+	"git.enabled": true,
+	"git.autofetch": false,
+	"git.autoRepositoryDetection": true,
+	"git.enableSmartCommit": false,
+	"git.confirmSync": true,
+	"git.postCommitCommand": "none",
+	"npm.runSilent": false,
+	"emmet.includeLanguages": {},
+	"emmet.excludeLanguages": [
+		"markdown"
+	],
+	"search.quickAccess.includeHistory": false,
+	"search.quickAccess.preserveInput": false,
+	"search.quickOpen.history": 0,
+	"search.globalFindClipboard": false,
+	"search.seedOnFocus": false,
+	"search.seedWithNearestWord": false,
+	"workbench.quickOpen.closeOnFocusLost": true,
+	"workbench.commandPalette.experimental.suggestCommands": false,
+	"editor.quickSuggestions": false,
+	"editor.suggestOnTriggerCharacters": false,
+	"editor.wordBasedSuggestions": "off",
+	"accessibility.verbosity.enabled": false,
+	"accessibility.signals.lineHasBreakpoint": {
+		"sound": "never",
+		"announcement": "never"
+	},
+	"accessibility.signals.lineHasError": {
+		"sound": "never",
+		"announcement": "never"
+	},
+	"accessibility.signals.lineHasWarning": {
+		"sound": "never",
+		"announcement": "never"
+	},
+	"accessibility.signals.lineHasInlineSuggestion": {
+		"sound": "never",
+		"announcement": "never"
+	},
+	"accessibility.signals.onDebugBreak": {
+		"sound": "never",
+		"announcement": "never"
+	},
+	"accessibility.signals.noInlayHints": {
+		"sound": "never",
+		"announcement": "never"
+	},
+	"accessibility.signals.taskCompleted": {
+		"sound": "never",
+		"announcement": "never"
+	},
+	"accessibility.signals.taskFailed": {
+		"sound": "never",
+		"announcement": "never"
+	},
+	"accessibility.signals.terminalCommandFailed": {
+		"sound": "never",
+		"announcement": "never"
+	},
+	"accessibility.signals.terminalQuickFix": {
+		"sound": "never",
+		"announcement": "never"
+	},
+	"accessibility.signals.diffLineInserted": {
+		"sound": "never",
+		"announcement": "never"
+	},
+	"accessibility.signals.diffLineDeleted": {
+		"sound": "never",
+		"announcement": "never"
+	},
+	"accessibility.signals.diffLineModified": {
+		"sound": "never",
+		"announcement": "never"
+	},
+	"workbench.list.automaticKeyboardNavigation": false,
+	"workbench.list.keyboardNavigation": "simple",
+	"workbench.hover.delay": 10000,
+	"workbench.tips.enabled": false,
+	"workbench.welcomePage.walkthroughs.openOnInstall": false,
+	"workbench.startupEditor": "none",
+	"terminal.integrated.automationProfile.osx": null,
+	"terminal.integrated.profiles.osx": {
+		"zsh": {
+			"path": "/bin/zsh",
+			"args": ["-l"]
+		}
+	},
+	"terminal.integrated.rightClickBehavior": "nothing",
+	"terminal.integrated.macOptionIsMeta": false,
+	"terminal.integrated.macOptionClickForcesSelection": false,
+	"workbench.editor.enablePreview": false,
+	"workbench.editor.enablePreviewFromQuickOpen": false
+
+}

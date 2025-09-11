@@ -1,0 +1,300 @@
+services:
+  # Main application service
+  cryptoscalp-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: development
+    container_name: cryptoscalp-app
+    volumes:
+      - .:/app
+      - ./data:/app/data
+      - ./logs:/app/logs
+      - ./models:/app/models
+    ports:
+      - "8000:8000"
+      - "8501:8501"  # Streamlit dashboard
+    environment:
+      - PYTHONPATH=/app/src
+      - CRYPTOSCALP_ENV=development
+      - DATABASE_URL=postgresql://cryptoscalp:devpassword@cryptoscalp-db:5432/cryptoscalp_dev
+      - REDIS_URL=redis://cryptoscalp-redis:6379/0
+      - CLICKHOUSE_URL=clickhouse://cryptoscalp-clickhouse:9000/cryptoscalp_dev
+      - RABBITMQ_URL=amqp://guest:guest@cryptoscalp-rabbitmq:5672/
+      - JUPYTER_TOKEN=cryptoscalp-dev-token
+    depends_on:
+      - cryptoscalp-db
+      - cryptoscalp-redis
+      - cryptoscalp-clickhouse
+      - cryptoscalp-rabbitmq
+    networks:
+      - cryptoscalp-network
+    restart: unless-stopped
+    command: >
+      sh -c "python -m uvicorn src.main:app --host 0.0.0.0 --port 8000 --reload"
+
+  # Jupyter notebook for data analysis
+  jupyter:
+    build:
+      context: .
+      dockerfile: Dockerfile.jupyter
+    container_name: cryptoscalp-jupyter
+    volumes:
+      - .:/app
+      - ./notebooks:/app/notebooks
+      - ./data:/app/data
+    ports:
+      - "8888:8888"
+    environment:
+      - JUPYTER_TOKEN=cryptoscalp-dev-token
+      - PYTHONPATH=/app/src
+    depends_on:
+      - cryptoscalp-db
+      - cryptoscalp-redis
+    networks:
+      - cryptoscalp-network
+    restart: unless-stopped
+    command: >
+      jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --allow-root --NotebookApp.token='cryptoscalp-dev-token'
+
+  # PostgreSQL database for trading data
+  cryptoscalp-db:
+    image: postgres:15-alpine
+    container_name: cryptoscalp-db
+    environment:
+      - POSTGRES_DB=cryptoscalp_dev
+      - POSTGRES_USER=cryptoscalp
+      - POSTGRES_PASSWORD=devpassword
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init-scripts:/docker-entrypoint-initdb.d
+    ports:
+      - "5432:5432"
+    networks:
+      - cryptoscalp-network
+    restart: unless-stopped
+    command: >
+      postgres -c 'max_connections=200' -c 'shared_buffers=256MB' -c 'effective_cache_size=1GB' -c 'work_mem=4MB' -c 'maintenance_work_mem=64MB' -c 'checkpoint_completion_target=0.9' -c 'wal_buffers=16MB' -c 'default_statistics_target=100' -c 'random_page_cost=1.1' -c 'effective_io_concurrency=200' -c 'wal_level=replica' -c 'max_wal_size=1GB' -c 'min_wal_size=80MB'
+
+  # Redis for caching and session management
+  cryptoscalp-redis:
+    image: redis:7-alpine
+    container_name: cryptoscalp-redis
+    command: redis-server --appendonly yes --maxmemory 512mb --maxmemory-policy allkeys-lru
+    volumes:
+      - redis_data:/data
+    ports:
+      - "6379:6379"
+    networks:
+      - cryptoscalp-network
+    restart: unless-stopped
+    sysctls:
+      - net.core.somaxconn=65535
+
+  # ClickHouse for time-series analytics
+  cryptoscalp-clickhouse:
+    image: clickhouse/clickhouse-server:23.8-alpine
+    container_name: cryptoscalp-clickhouse
+    environment:
+      - CLICKHOUSE_DB=cryptoscalp_dev
+      - CLICKHOUSE_USER=default
+      - CLICKHOUSE_PASSWORD=
+    volumes:
+      - clickhouse_data:/var/lib/clickhouse
+      - ./clickhouse-config.xml:/etc/clickhouse-server/config.d/config.xml
+    ports:
+      - "9000:9000"
+      - "8123:8123"
+    networks:
+      - cryptoscalp-network
+    restart: unless-stopped
+    ulimits:
+      nofile:
+        soft: 262144
+        hard: 262144
+
+  # RabbitMQ for message queuing
+  cryptoscalp-rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: cryptoscalp-rabbitmq
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - cryptoscalp-network
+    restart: unless-stopped
+
+  # pgAdmin for database management
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: cryptoscalp-pgadmin
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@cryptoscalp.ai
+      - PGADMIN_DEFAULT_PASSWORD=admin123
+      - PGADMIN_CONFIG_SERVER_MODE=False
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    ports:
+      - "8080:80"
+    depends_on:
+      - cryptoscalp-db
+    networks:
+      - cryptoscalp-network
+    restart: unless-stopped
+
+  # Prometheus for monitoring
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: cryptoscalp-prometheus
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    ports:
+      - "9090:9090"
+    networks:
+      - cryptoscalp-network
+    restart: unless-stopped
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+
+  # Grafana for visualization
+  grafana:
+    image: grafana/grafana:latest
+    container_name: cryptoscalp-grafana
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin123
+      - GF_USERS_ALLOW_SIGN_UP=false
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./monitoring/grafana/provisioning:/etc/grafana/provisioning
+    ports:
+      - "3000:3000"
+    depends_on:
+      - prometheus
+    networks:
+      - cryptoscalp-network
+    restart: unless-stopped
+
+  # Node Exporter for system metrics
+  node-exporter:
+    image: prom/node-exporter:latest
+    container_name: cryptoscalp-node-exporter
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.ignored-mount-points=^/(sys|proc|dev|host|etc)($$|/)'
+    ports:
+      - "9100:9100"
+    networks:
+      - cryptoscalp-network
+    restart: unless-stopped
+
+  # NVIDIA Triton Inference Server for optimized model serving
+  triton-server:
+    image: nvcr.io/nvidia/tritonserver:23.10-py3
+    container_name: cryptoscalp-triton
+    volumes:
+      - ./models:/models
+      - ./config/triton:/config
+    ports:
+      - "8001:8001"  # HTTP
+      - "8002:8002"  # gRPC
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    networks:
+      - cryptoscalp-network
+    restart: unless-stopped
+    profiles:
+      - gpu
+
+  # Test database for isolated testing
+  cryptoscalp-test-db:
+    image: postgres:15-alpine
+    container_name: cryptoscalp-test-db
+    environment:
+      - POSTGRES_DB=cryptoscalp_test
+      - POSTGRES_USER=cryptoscalp_test
+      - POSTGRES_PASSWORD=testpassword
+    volumes:
+      - postgres_test_data:/var/lib/postgresql/data
+      - ./init-scripts:/docker-entrypoint-initdb.d
+    ports:
+      - "5433:5432"
+    networks:
+      - cryptoscalp-network
+    restart: unless-stopped
+    command: >
+      postgres -c 'max_connections=50' -c 'shared_buffers=128MB' -c 'work_mem=2MB'
+    profiles:
+      - testing
+
+  # Redis for testing
+  cryptoscalp-test-redis:
+    image: redis:7-alpine
+    container_name: cryptoscalp-test-redis
+    command: redis-server --appendonly yes --maxmemory 128mb --maxmemory-policy allkeys-lru
+    volumes:
+      - redis_test_data:/data
+    ports:
+      - "6380:6379"
+    networks:
+      - cryptoscalp-network
+    restart: unless-stopped
+    profiles:
+      - testing
+
+  # RabbitMQ for testing
+  cryptoscalp-test-rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: cryptoscalp-test-rabbitmq
+    environment:
+      - RABBITMQ_DEFAULT_USER=testguest
+      - RABBITMQ_DEFAULT_PASS=testguest
+    volumes:
+      - rabbitmq_test_data:/var/lib/rabbitmq
+    ports:
+      - "5673:5672"
+      - "15673:15672"
+    networks:
+      - cryptoscalp-network
+    restart: unless-stopped
+    profiles:
+      - testing
+
+volumes:
+  postgres_data:
+  redis_data:
+  clickhouse_data:
+  rabbitmq_data:
+  pgadmin_data:
+  prometheus_data:
+  grafana_data:
+  postgres_test_data:
+  redis_test_data:
+  rabbitmq_test_data:
+
+networks:
+  cryptoscalp-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16

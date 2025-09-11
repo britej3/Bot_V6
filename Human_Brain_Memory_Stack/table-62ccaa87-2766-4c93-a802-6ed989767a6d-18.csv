@@ -1,0 +1,6 @@
+﻿Pitfall,Symptom,Fix
+Temporal/Factual output mismatch,Cogniee fusion failures,Normalize ALL outputs via ContextAssembler (Step 3)
+Router false negatives,"""Why"" queries routed to LightRAG",Add DSPy intent signals in _is_temporal_query() (Step 1)
+Letta over-archival,Important memories deleted,Require 3 low-engagement signals before archival (W&B config)
+Graphiti cold-start latency,Slow first temporal query,Pre-warm cache: graphiti preload --window 24h
+Cogniee temporal fusion failure,Causal chains ignored,Patch Cogniee: enable_temporal_fusion=True (Step 3)

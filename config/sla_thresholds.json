@@ -1,0 +1,51 @@
+{
+  "adaptive_risk_management": {
+    "risk_assessment_latency": {
+      "average_ms": 50,
+      "max_ms": 100,
+      "p95_ms": 75,
+      "p99_ms": 90
+    },
+    "volatility_calculation_latency": {
+      "average_ms": 10,
+      "max_ms": 50
+    },
+    "portfolio_risk_calculation_latency": {
+      "average_ms": 20,
+      "max_ms": 100
+    },
+    "market_regime_detection_latency": {
+      "average_ms": 5,
+      "max_ms": 20
+    },
+    "position_sizing_latency": {
+      "average_ms": 1,
+      "max_ms": 5
+    },
+    "throughput": {
+      "min_signals_per_second": 100,
+      "min_concurrent_signals": 50
+    },
+    "memory_usage": {
+      "max_increase_mb": 50,
+      "max_large_dataset_increase_mb": 100
+    },
+    "cpu_usage": {
+      "max_percentage_under_load": 80
+    },
+    "error_rate": {
+      "max_percentage": 1.0
+    },
+    "cold_start": {
+      "max_seconds": 10,
+      "first_signal_max_seconds": 1
+    },
+    "sustained_load": {
+      "duration_seconds": 30,
+      "min_throughput": 50
+    },
+    "scalability": {
+      "max_degradation_ratio": 0.5
+    }
+  }
+}

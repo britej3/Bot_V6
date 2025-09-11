@@ -1,0 +1,70 @@
+site_name: Project Documentation
+site_description: Comprehensive project documentation with Diátaxis framework
+site_author: Development Team
+site_url: https://your-project.com/docs
+
+# Documentation directory
+docs_dir: .
+
+# Repository
+repo_name: your-org/your-project
+repo_url: https://github.com/your-org/your-project
+
+# Theme
+theme:
+  name: material
+  palette:
+    primary: blue
+    accent: blue
+  font:
+    text: Roboto
+    code: Roboto Mono
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - toc.integrate
+    - search.suggest
+    - search.highlight
+
+# Extensions
+markdown_extensions:
+  - pymdownx.highlight
+  - pymdownx.superfences
+  - pymdownx.details
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - attr_list
+
+# Navigation
+nav:
+  - Home: index.md
+  - Documentation:
+      - Overview: Documentation/README.md
+      - Diátaxis Framework:
+          - Tutorials: Documentation/tutorials/index.md
+          - How-to Guides: Documentation/how_to_guides/index.md
+          - Reference: Documentation/reference/index.md
+          - Explanation: Documentation/explanation/index.md
+      - Phase-Based Documentation:
+          - 01 Project Overview: Documentation/01_Project_Overview/README.md
+          - 02 Requirements: Documentation/02_Requirements/functional_requirements.md
+          - 03 Architecture Design: Documentation/03_Architecture_Design/system_architecture.md
+          - 04 Database Schema: Documentation/04_Database_Schema/database_design.md
+          - 05 API Documentation: Documentation/05_API_Documentation/api_reference.md
+          - 06 Development Guides: Documentation/06_Development_Guides/setup_guide.md
+          - 07 Testing: Documentation/07_Testing/testing_strategy.md
+          - 08 Deployment: Documentation/08_Deployment/README.md
+          - 09 Maintenance: Documentation/09_Maintenance/system_maintenance.md
+          - 10 Standards: Documentation/10_Standards_and_Best_Practices/coding_standards.md
+
+# Additional configuration
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/your-org/your-project
+    - icon: fontawesome/brands/twitter
+      link: https://twitter.com/your-org
+
+# Plugins
+plugins:
+  - search

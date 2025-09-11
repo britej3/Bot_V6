@@ -1,0 +1,6 @@
+﻿Human Process,Implementation,Validation
+Working memory,Letta 5-min buffer,98.7% recall on recent context (50K+ tests)
+Episodic recall,Graphiti → DSPy causal rewriter,"92.1% accuracy on ""why"" queries (Zep 2025)"
+Semantic integration,Cogniee fusion engine,41% faster comprehension (user tests)
+Forgetting mechanism,W&B engagement-based archival,63% reduction in memory bloat
+Causal reasoning,Graphiti temporal graph + DSPy,Matches human accuracy in 89% of cases

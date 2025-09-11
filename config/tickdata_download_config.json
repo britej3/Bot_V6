@@ -1,0 +1,95 @@
+{
+  "download_config": {
+    "date_ranges": {
+      "2024_full": {
+        "start_date": "2024-01-01",
+        "end_date": "2024-12-31",
+        "description": "Full year 2024"
+      },
+      "2025_h1": {
+        "start_date": "2025-01-01", 
+        "end_date": "2025-06-30",
+        "description": "First half of 2025"
+      }
+    },
+    "symbols": {
+      "major_pairs": [
+        "BTCUSDT",
+        "ETHUSDT", 
+        "BNBUSDT",
+        "XRPUSDT",
+        "ADAUSDT",
+        "SOLUSDT",
+        "DOGEUSDT",
+        "DOTUSDT",
+        "AVAXUSDT",
+        "MATICUSDT"
+      ],
+      "defi_tokens": [
+        "UNIUSDT",
+        "LINKUSDT",
+        "AAVEUSDT",
+        "COMPUSDT",
+        "SUSHIUSDT",
+        "CRVUSDT",
+        "YFIUSDT",
+        "1INCHUSDT"
+      ],
+      "layer1_tokens": [
+        "NEARUSDT",
+        "ATOMUSDT",
+        "ALGOUSDT",
+        "FTMUSDT",
+        "HBARUSDT",
+        "EGLDUSDT",
+        "FLOWUSDT"
+      ]
+    },
+    "download_settings": {
+      "batch_size_days": 7,
+      "rate_limit_delay_seconds": 1.0,
+      "retry_attempts": 3,
+      "retry_delay_seconds": 5.0,
+      "output_format": ["parquet", "csv"],
+      "compression": "gzip"
+    },
+    "quality_settings": {
+      "min_records_per_day": 1000,
+      "max_gap_minutes": 5,
+      "validate_timestamps": true,
+      "remove_duplicates": true,
+      "validate_price_ranges": true
+    }
+  },
+  "platform_configs": {
+    "binance": {
+      "enabled": true,
+      "priority": 1,
+      "rate_limits": {
+        "requests_per_minute": 1200,
+        "weight_per_minute": 6000
+      },
+      "endpoints": {
+        "futures": "https://fapi.binance.com",
+        "spot": "https://api.binance.com"
+      }
+    },
+    "bybit": {
+      "enabled": false,
+      "priority": 2,
+      "note": "Alternative data source (not implemented yet)"
+    },
+    "okx": {
+      "enabled": false,
+      "priority": 3,
+      "note": "Alternative data source (not implemented yet)"
+    }
+  },
+  "storage_config": {
+    "base_directory": "data/historical",
+    "structure": "symbol/year/month",
+    "file_naming": "{symbol}_{timeframe}_{start_date}_{end_date}",
+    "backup_enabled": true,
+    "compression_enabled": true
+  }
+}

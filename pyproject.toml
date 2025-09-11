@@ -1,0 +1,262 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cryptoscalp-ai"
+version = "0.1.0"
+description = "Production-Ready Autonomous Algorithmic High-Leverage Crypto Futures Scalping Bot"
+authors = [
+    {name = "Development Team", email = "dev@cryptoscalp.ai"}
+]
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Financial and Insurance Industry",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Office/Business :: Financial",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = [
+    "fastapi>=0.104.1",
+    "uvicorn[standard]>=0.24.0",
+    "pydantic>=2.5.0",
+    "psycopg2-binary>=2.9.9",
+    "sqlalchemy>=2.0.23",
+    "redis>=5.0.1",
+    "pandas>=2.1.4",
+    "numpy>=1.26.2",
+    "torch>=2.1.1",
+    "scikit-learn>=1.3.2",
+    "ccxt>=4.1.63",
+    "python-binance>=1.0.19",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.3",
+    "pytest-asyncio>=0.21.1",
+    "pytest-cov>=4.1.0",
+    "black>=23.11.0",
+    "isort>=5.12.0",
+    "flake8>=6.1.0",
+    "mypy>=1.7.1",
+    "pre-commit>=3.6.0",
+    "bandit>=1.7.5",
+]
+jupyter = [
+    "jupyterlab>=4.0.9",
+    "matplotlib>=3.8.2",
+    "plotly>=5.17.0",
+    "seaborn>=0.13.0",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/cryptoscalp-ai/cryptoscalp-ai"
+"Bug Reports" = "https://github.com/cryptoscalp-ai/cryptoscalp-ai/issues"
+"Source" = "https://github.com/cryptoscalp-ai/cryptoscalp-ai"
+
+# Tool configurations
+[tool.black]
+line-length = 88
+target-version = ['py38', 'py39', 'py310', 'py311']
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+  # directories
+  \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+  | \.venv
+  | venv
+)/
+'''
+
+[tool.isort]
+profile = "black"
+line_length = 88
+multi_line_output = 3
+include_trailing_comma = true
+force_grid_wrap = 0
+use_parentheses = true
+ensure_newline_before_comments = true
+
+[tool.mypy]
+python_version = "3.8"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+disallow_untyped_decorators = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_no_return = true
+warn_unreachable = true
+strict_equality = true
+
+# Per-module options
+[[tool.mypy.overrides]]
+module = "ccxt.*"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "talib.*"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "clickhouse_driver.*"
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py", "*_test.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "-v --tb=short --strict-markers --strict-config"
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+    "integration: marks tests as integration tests",
+    "unit: marks tests as unit tests",
+    "smoke: marks tests as smoke tests",
+]
+filterwarnings = [
+    "ignore::DeprecationWarning",
+    "ignore::PendingDeprecationWarning",
+]
+
+[tool.coverage.run]
+source = ["src"]
+omit = [
+    "tests/*",
+    "setup.py",
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "if self.debug:",
+    "if settings.DEBUG",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if 0:",
+    "if __name__ == .__main__.:",
+    "class .*\\bProtocol\\):",
+    "@(abc\\.)?abstractmethod",
+]
+
+[tool.bandit]
+exclude_dirs = ["tests", "docs"]
+skips = ["B101", "B601"]
+
+[tool.flake8]
+max-line-length = 88
+extend-ignore = ["E203", "W503", "E501", "B008"]
+per-file-ignores = [
+    "__init__.py:F401",
+    "tests/*:B011,B902",
+]
+
+[tool.pylint.messages_control]
+disable = [
+    "missing-module-docstring",
+    "missing-class-docstring",
+    "missing-function-docstring",
+    "too-few-public-methods",
+    "duplicate-code",
+    "no-self-use",
+    "unused-argument",
+]
+
+[tool.pylint.format]
+max-line-length = 88
+
+[tool.sqlfluff]
+dialect = "postgres"
+rules = [
+    "L001",  # Unnecessary trailing whitespace
+    "L002",  # Missing trailing newline
+    "L003",  # Indentation not consistent with previous lines
+    "L004",  # Leading/Trailing comma enforcement
+    "L005",  # Comma separated list newlines
+    "L006",  # Operators should be surrounded by single spaces
+    "L007",  # Operators should be at start of lines
+    "L008",  # Comma separated list trailing comma enforcement
+    "L009",  # Inconsistent column references
+    "L010",  # Inconsistent column references
+    "L011",  # Inconsistent column references
+    "L012",  # Implicit/explicit column references
+    "L013",  # Column expression without alias
+    "L014",  # Inconsistent use of function names
+    "L015",  # DISTINCT used with parentheses
+    "L016",  # Column aliases should be unique within each clause
+    "L017",  # Function name not in consistent case
+    "L018",  # WITH clause closing bracket indent
+    "L019",  # Leading/Trailing comma enforcement
+    "L020",  # Table aliases should be unique within each clause
+    "L021",  # Ambiguous use of DISTINCT in select statement
+    "L022",  # Blank line before DISTINCT
+    "L023",  # Single whitespace after DISTINCT
+    "L024",  # Inconsistent column references
+    "L025",  # Table aliases should be unique within each clause
+    "L026",  # References should be in FROM clause
+    "L027",  # References should be in FROM clause
+    "L028",  # References should be in FROM clause
+    "L029",  # References should be in FROM clause
+    "L030",  # Inconsistent column references
+    "L031",  # Avoid table aliases in from clauses and join conditions
+    "L032",  # Prefer UNION ALL
+    "L033",  # UNION ALL not used for combined queries
+    "L034",  # Select wildcards then specific column
+    "L035",  # Select wildcards then specific column
+    "L036",  # Select wildcards then specific column
+    "L037",  # Ambiguous column references
+    "L038",  # Trailing commas
+    "L039",  # Unnecessary whitespace
+    "L040",  # NULL usage
+    "L041",  # SELECT * not allowed
+    "L042",  # JOIN clause order
+    "L043",  # JOIN clause order
+    "L044",  # Query produces an unknown number of result columns
+    "L045",  # Query produces an unknown number of result columns
+    "L046",  # Jinja tags should have spaces
+    "L047",  # Consistent column references
+    "L048",  # Quoted identifiers
+    "L049",  # Inconsistent case
+    "L050",  # Long lines
+    "L051",  # Inconsistent column references
+    "L052",  # Semi-colon found before terminator
+    "L053",  # Inconsistent column references
+    "L054",  # Inconsistent column references
+    "L055",  # Use short forms of keywords
+    "L056",  # Inconsistent column references
+    "L057",  # Inconsistent column references
+    "L058",  # Inconsistent column references
+    "L059",  # Inconsistent column references
+    "L060",  # Use short forms of keywords
+    "L061",  # Inconsistent column references
+    "L062",  # Inconsistent column references
+    "L063",  # Inconsistent column references
+    "L064",  # Inconsistent column references
+    "L065",  # Inconsistent column references
+    "L066",  # Inconsistent column references
+    "L067",  # Inconsistent column references
+    "L068",  # Inconsistent column references
+    "L069",  # Inconsistent column references
+    "L070",  # Inconsistent column references
+]

@@ -1,0 +1,107 @@
+[MASTER]
+init-hook='import sys; sys.path.append("src")'
+load-plugins=pylint.extensions.docparams,pylint.extensions.docstyle
+persistent=yes
+jobs=1
+unsafe-load-any-extension=no
+extension-pkg-whitelist=
+
+[MESSAGES CONTROL]
+disable=
+    C0103,  # invalid-name
+    C0114,  # missing-module-docstring
+    C0115,  # missing-class-docstring
+    C0116,  # missing-function-docstring
+    R0903,  # too-few-public-methods
+    R0913,  # too-many-arguments
+    R0914,  # too-many-locals
+    R0902,  # too-many-instance-attributes
+    W0613,  # unused-argument
+    W0223,  # abstract-method
+    E1101,  # no-member
+    E0611,  # no-name-in-module
+    R0801,  # duplicate-code
+    C0301,  # line-too-long
+    W0511,  # fixme
+
+[REPORTS]
+output-format=text
+reports=no
+score=yes
+
+[REFACTORING]
+max-nested-blocks=5
+never-returning-functions=sys.exit
+
+[BASIC]
+good-names=i,j,k,ex,Run,_,x,y,z,df,df1,df2
+good-names-rgxs=^[_a-z][_a-z0-9]*$
+bad-names=foo,bar,baz,toto,tutu,tata
+name-group=
+include-naming-hint=no
+property-classes=abc.abstractproperty
+function-rgx=[a-z_][a-z0-9_]{2,30}$
+variable-rgx=[a-z_][a-z0-9_]{2,30}$
+const-rgx=(([A-Z_][A-Z0-9_]*)|(__.*__))$
+attr-rgx=[a-z_][a-z0-9_]{2,30}$
+argument-rgx=[a-z_][a-z0-9_]{2,30}$
+class-attribute-rgx=([A-Za-z_][A-Za-z0-9_]{2,30}|(__.*__))$
+inlinevar-rgx=[A-Za-z_][A-Za-z0-9_]*$
+class-rgx=[A-Z_][a-zA-Z0-9]+$
+module-rgx=(([a-z_][a-z0-9_]*)|([A-Z][a-zA-Z0-9]+))$
+method-rgx=[a-z_][a-z0-9_]{2,30}$
+
+[TYPECHECK]
+ignore-mixin-members=yes
+ignored-modules=
+ignored-classes=
+generate-members=
+
+[VARIABLES]
+init-import=no
+dummy-variables-rgx=_+$|(_[a-zA-Z0-9_]*[a-zA-Z0-9]+?$)
+defining-attr-methods=__init__,__new__,setUp
+callbacks=cb_,_cb
+
+[FORMAT]
+max-line-length=88
+ignore-long-lines=^\s*(# )?<?https?://\S+>?$
+single-line-if-stmt=no
+no-space-check=trailing-comma,dict-separator
+max-module-lines=1000
+indent-string='    '
+
+[SIMILARITIES]
+min-similarity-lines=4
+ignore-comments=yes
+ignore-docstrings=yes
+ignore-imports=no
+
+[IMPORTS]
+deprecated-modules=regsub,TERMIOS,Bastion,rexec
+import-graph=
+ext-import-graph=
+int-import-graph=
+
+[CLASSES]
+ignore-iface-methods=isImplementedBy,deferred,extends,names,namesAndDescriptions,queryDescriptionFor,getBases,getDescriptionFor,getDoc,getName,getTaggedValue,getTaggedValueTags,isEqualOrExtendedBy,setTaggedValue,isinstance
+defining-attr-methods=__init__,__new__,setUp
+valid-classmethod-first-arg=cls
+valid-metaclass-classmethod-first-arg=cls
+exclude-protected=_asdict,_fields,_replace,_source,_make
+
+[DESIGN]
+max-args=10
+ignored-argument-names=_.*
+max-locals=25
+max-returns=6
+max-branches=12
+max-statements=50
+max-parents=7
+max-attributes=10
+min-public-methods=0
+max-public-methods=20
+max-bool-expr=5
+
+[EXCEPTIONS]
+overgeneral-exceptions=builtins.Exception,builtins.BaseException
