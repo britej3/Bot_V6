@@ -79,3 +79,6 @@ dist/
 
 # --- Database files ---
 *.db
+.crush
+.github/
+.vscode/
