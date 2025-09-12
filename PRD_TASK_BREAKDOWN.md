@@ -1,5 +1,47 @@
 # PRD Task Breakdown with Progress Tracking
 
+---
+## 🚨 Section 0: Project Reset & MVP Scaffolding (Current Focus: Weeks 1-4) 🚨
+
+**Goal:** To build a single, end-to-end, functional pipeline running on a testnet. This phase is about making the existing components talk to each other to form a "Tracer Bullet" Minimum Viable Product. All tasks in this section are **CRITICAL** priority.
+
+### 0.1 Week 1: Repository Reset & Setup
+| Task ID | Description | Status | Start Date | Target Date | Assigned To | Notes |
+|---|---|---|---|---|---|---|
+| MVP-1.1 | Archive old aspirational documentation (`README.md`, `GAP_ANALYSIS_REPORT.md`, etc.) | [x] | 2025-09-10 | 2025-09-10 | Jules | Completed |
+| MVP-1.2 | Remove unrelated Node.js project files (`package.json`, `AGENTS.md`) | [x] | 2025-09-10 | 2025-09-10 | Jules | Completed |
+| MVP-1.3 | Create new, honest `README.md` reflecting pre-alpha MVP status | [x] | 2025-09-10 | 2025-09-10 | Jules | Completed |
+| MVP-1.4 | Create main application entry point `src/main.py` | [ ] | 2025-09-11 | 2025-09-12 | Dev Team | Should contain basic init/shutdown logic |
+
+### 0.2 Week 2: Data-to-Strategy Connection
+| Task ID | Description | Status | Start Date | Target Date | Assigned To | Notes |
+|---|---|---|---|---|---|---|
+| MVP-2.1 | Initialize `WebSocketDataFeed` in `main.py` for one exchange/symbol | [ ] | 2025-09-13 | 2025-09-14 | Dev Team | e.g., Binance Testnet, BTC/USDT |
+| MVP-2.2 | Initialize `AutonomousScalpingEngine` in `main.py` | [ ] | 2025-09-13 | 2025-09-14 | Dev Team | |
+| MVP-2.3 | Plumb data from `WebSocketDataFeed` to `AutonomousScalpingEngine` | [ ] | 2025-09-15 | 2025-09-16 | Dev Team | Pass normalized tick data to `process_tick` |
+| MVP-2.4 | Log the `TradingSignal` output from the strategy engine | [ ] | 2025-09-16 | 2025-09-16 | Dev Team | **Goal: See live signals from live data** |
+
+### 0.3 Week 3: Strategy-to-Execution Connection
+| Task ID | Description | Status | Start Date | Target Date | Assigned To | Notes |
+|---|---|---|---|---|---|---|
+| MVP-3.1 | Initialize simulated `HighFrequencyTradingEngine` in `main.py` | [ ] | 2025-09-17 | 2025-09-17 | Dev Team | |
+| MVP-3.2 | Plumb `TradingSignal` to `HighFrequencyTradingEngine.submit_order` | [ ] | 2025-09-18 | 2025-09-19 | Dev Team | |
+| MVP-3.3 | Log the simulated execution confirmation from HFT engine | [ ] | 2025-09-19 | 2025-09-19 | Dev Team | **Goal: See simulated orders from live signals** |
+
+### 0.4 Week 4: Basic Risk & Portfolio Feedback Loop
+| Task ID | Description | Status | Start Date | Target Date | Assigned To | Notes |
+|---|---|---|---|---|---|---|
+| MVP-4.1 | Create a basic, in-memory `PortfolioManager` class | [ ] | 2025-09-20 | 2025-09-21 | Dev Team | Tracks simulated fills to manage position state |
+| MVP-4.2 | Feed simulated execution data into the `PortfolioManager` | [ ] | 2025-09-22 | 2025-09-23 | Dev Team | |
+| MVP-4.3 | Initialize `AdaptiveRiskManager` in `main.py` | [ ] | 2025-09-24 | 2025-09-24 | Dev Team | |
+| MVP-4.4 | Feed portfolio data into `AdaptiveRiskManager` | [ ] | 2025-09-25 | 2025-09-26 | Dev Team | **Goal: See risk engine react to simulated trades** |
+
+---
+**NOTE: The sections below this line represent the original, long-term project plan. Work on these items should only begin after the MVP Scaffolding tasks in Section 0 are complete.**
+---
+
+# PRD Task Breakdown with Progress Tracking
+
 ## 📋 Project Overview: CryptoScalp AI - Production-Ready Autonomous Algorithmic High-Leverage Crypto Futures Scalping Bot
 
 **Total Estimated Timeline:** 36 weeks (9 months)
